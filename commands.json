@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "apt update",
+    "apt upgrade"
+  ],
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin"
+  }
+}
