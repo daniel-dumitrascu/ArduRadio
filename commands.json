@@ -1,7 +1,13 @@
 {
   "commands": [
-    "apt update",
-    "apt upgrade"
+  {
+    "command": "sudo apt update",
+    "input": ""
+  },
+  {
+    "command": "sudo apt upgrade",
+    "input": "Y\n"
+  }
   ],
   "environment": {
     "PATH": "/usr/local/bin:/usr/bin:/bin"
