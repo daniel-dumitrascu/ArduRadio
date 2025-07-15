@@ -1,15 +1,41 @@
 {
-  "commands": [
-  {
-    "command": "sudo apt update",
-    "input": ""
-  },
-  {
-    "command": "sudo apt upgrade",
-    "input": "Y\n"
-  }
-  ],
-  "environment": {
-    "PATH": "/usr/local/bin:/usr/bin:/bin"
-  }
+    "commands": [
+        {
+            "command": "sudo apt update",
+            "input": "",
+            "description": ""
+        },
+        {
+            "command": "sudo apt upgrade",
+            "input": "Y\n",
+            "description": ""
+        },
+        {
+            "command": "sudo sed -i 's/^#\(dtparam=i2s=on\)/\1/' /boot/config.txt",
+            "input": "",
+            "description": "uncomment 'dtparam=i2s=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i 's/^\(dtparam=audio=on\)/#\1/' /boot/config.txt",
+            "input": "",
+            "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i '/^dtparam=audio=on$/a dtoverlay=iqaudio-dacplus,unmute_amp' /boot/config.txt",
+            "input": "",
+            "description": "append 'dtoverlay=iqaudio-dacplus,unmute_amp' to dtparam=audio=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i 's/^\(dtoverlay=vc4-kms-v3d\)\(.*\)/\1,noaudio\2/' /boot/config.txt",
+            "input": "",
+            "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo reboot",
+            "input": ""
+        }
+    ],
+    "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin"
+    }
 }
