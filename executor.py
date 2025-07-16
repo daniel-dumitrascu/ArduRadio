@@ -2,12 +2,16 @@ import subprocess
 import logging
 from typing import Tuple
 from command import Command
+from options import Options
+from option import Option
 
-def executeCommands(log: logging.log, commands: list[Command]):
-    for comm in commands:
-        log.info("Executing command: " + comm.command)
-        splitCommand = comm.command.split()
-        success, output, error = __executeCommand__(splitCommand, comm.input)
+def executeCommands(log: logging.log, commands: list[Command], opts: Options):
+    start = opts.options.get(Option.SKIP.value)
+    end = len(commands)
+    for i in range(start, end):
+        log.info("Executing command: " + commands[i].command)
+        splitCommand = commands[i].command.split()
+        success, output, error = __executeCommand__(splitCommand, commands[i].input)
         if success:
             log.info(output)
         else:

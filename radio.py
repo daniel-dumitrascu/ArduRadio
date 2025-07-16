@@ -21,7 +21,7 @@ def setup(options : Options):
     commands = cFileHandler.readCommands()
 
     # Execute them
-    executor.executeCommands(log, commands)
+    executor.executeCommands(log, commands, options)
 
 spaces = " " * 10
 call_script_info = "The script should be called with either 'setup' or 'start'.\nOptions are:\n" + spaces + "-skip <number>: tells at what command should the flow start skipping the commands in front."

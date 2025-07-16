@@ -21,4 +21,11 @@ class SetupOptions(Options):
             value = args[i+1]
 
             if self.options.get(key) is not None:
-                self.options[key] = value
+                #TODO rewrite this part. Each option should know the type (str, bool, int, etc)
+                if key == Option.SKIP.value:
+                    try:
+                        self.options[key] = int(value)
+                    except Exception as e:
+                        print(f"Parameter {value} for {key} is invalid!")
+                else:
+                    self.options[key] = value
