@@ -13,7 +13,8 @@ def executeCommands(log: logging.log, commands: list[Command], opts: Options):
         splitCommand = commands[i].command.split()
         success, output, error = __executeCommand__(splitCommand, commands[i].input)
         if success:
-            log.info(output)
+            if len(output) > 0:
+                log.info(output)
         else:
             log.error(error)
             break
