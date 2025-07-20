@@ -10,8 +10,7 @@ def executeCommands(log: logging.log, commands: list[Command], opts: Options):
     end = len(commands)
     for i in range(start, end):
         log.info("Executing command: " + commands[i].command)
-        splitCommand = commands[i].command.split()
-        success, output, error = __executeCommand__(splitCommand, commands[i].input)
+        success, output, error = __executeCommand__(commands[i].fragments, commands[i].input)
         if success:
             if len(output) > 0:
                 log.info(output)

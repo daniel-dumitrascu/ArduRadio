@@ -50,12 +50,12 @@
             "input": ""
         },
         {
-            "command": "sed -i \'$a Class = 0x41C\' /etc/bluetooth/main.conf",
+            "command": "sudo sed -i \\'$a Class = 0x41C\\' /etc/bluetooth/main.conf",
             "input": "",
             "description": "bluetooth setup - add Class = 0x41C" 
         },
         {
-            "command": "sed -i \'$a DiscoverableTimeout = 0\' /etc/bluetooth/main.conf",
+            "command": "sudo sed -i \\'$a DiscoverableTimeout = 0\\' /etc/bluetooth/main.conf",
             "input": "",
             "description": "bluetooth setup - add DiscoverableTimeout = 0" 
         }
