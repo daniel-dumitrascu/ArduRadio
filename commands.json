@@ -35,7 +35,7 @@
             "input": ""
         },
         {
-            "command": "sudo nmcli dev wifi connect \"SSID\" password \"password\"",
+            "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
             "input": "connect to the wifi"
         }
     ],
