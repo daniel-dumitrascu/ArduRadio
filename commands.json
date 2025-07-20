@@ -33,6 +33,10 @@
         {
             "command": "sudo rebbot",
             "input": ""
+        },
+        {
+            "command": "sudo nmcli dev wifi connect \"SSID\" password \"password\"",
+            "input": "connect to the wifi"
         }
     ],
     "environment": {
