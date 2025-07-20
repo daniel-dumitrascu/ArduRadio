@@ -21,9 +21,9 @@
             "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
         },
         {
-            "command": "sudo sed -i /^#dtparam=audio=on$/a\\dtoverlay=iqaudio-dacplus,unmute_amp /home/daniel/Projects/radio_files/config.txt",
+            "command": "sudo sed -i $a dtparam=iqaudio-dacplus,unmute_amp /home/daniel/Projects/radio_files/config.txt",
             "input": "",
-            "description": "append 'dtoverlay=iqaudio-dacplus,unmute_amp' to dtparam=audio=on' in '/boot/config.txt'"
+            "description": "add the line 'dtparam=iqaudio-dacplus,unmute_amp' in '/boot/config.txt'"
         },
         {
             "command": "sudo sed -i s/^\\(dtoverlay=vc4-kms-v3d\\)\\(.*\\)/\\1,noaudio\\2/ /home/daniel/Projects/radio_files/config.txt",
