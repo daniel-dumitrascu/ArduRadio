@@ -39,13 +39,15 @@ class CFile:
                 for comm_num, entry in enumerate(commandsData, 1):
                     comm = entry["command"]
                     input = entry["input"]
+                    interactive = entry["interactive"]
+                    description = entry["description"]
                     comm = comm.strip()
                     input = input.strip()
 
                     if not comm:  # Skip empty lines
                         continue
 
-                    commands.append(Command(comm, input))
+                    commands.append(Command(comm, input, interactive, description))
         except FileNotFoundError:
             self.log.error(f"Commands file was not found.")
         except UnicodeDecodeError:

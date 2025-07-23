@@ -10,7 +10,7 @@ def executeCommands(log: logging.log, commands: list[Command], opts: Options):
     end = len(commands)
     for i in range(start, end):
         log.info("Executing command: " + commands[i].command)
-        success, output, error = __executeCommand__(commands[i].fragments, commands[i].input)
+        success, output, error = execute(commands[i].fragments, commands[i].input, commands[i].interactive, commands[i].setShell)
         if success:
             if len(output) > 0:
                 log.info(output)
@@ -18,7 +18,14 @@ def executeCommands(log: logging.log, commands: list[Command], opts: Options):
             log.error(error)
             break
 
-def __executeCommand__(cmd: list, input: str, shell: bool = False) -> Tuple[bool, str, str]:
+def execute(fragments: list[str], input: str, interactive: bool, shell: bool):
+    if interactive:
+        return __executeInteractiveCommand__(fragments, input)
+    else:
+        return __executeNonInteractiveCommand__(fragments, input, shell)
+
+
+def __executeNonInteractiveCommand__(cmd: list, input: str, shell: bool = False) -> Tuple[bool, str, str]:
     try:
         result = subprocess.run(
             cmd,
@@ -33,3 +40,19 @@ def __executeCommand__(cmd: list, input: str, shell: bool = False) -> Tuple[bool
         return False, "", "Command timed out"
     except Exception as e:
         return False, "", str(e)
+    
+def __executeInteractiveCommand__(cmd: list, inputs: list[str]):
+    process = subprocess.Popen(
+        args=cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+
+    # Send all inputs
+    for input in inputs:
+        process.stdin.write(input + '\n')
+
+    stdout, stderr = process.communicate()
+    return process.returncode == 0, stdout, stderr

@@ -1,8 +1,17 @@
 class Command:
-    def __init__(self, command: str, input: str):
+    def __init__(self, command: str, input: str, interactive: bool, description: str):
         self.command = command
         self.fragments = self.split(command)
+        self.interactive = interactive
         self.input = input
+        self.description = description
+
+        if self.interactive:
+            self.input = self.split(self.input)
+
+        self.setShell = self.shouldSetShell(command)
+        if self.setShell:
+            self.fragments = self.command
 
     def split(self, command: str) -> list[str]:
         fragments = []
@@ -27,3 +36,6 @@ class Command:
             fragments += command[last:len(command)].split()
 
         return fragments
+    
+    def shouldSetShell(self, command: str) -> bool:
+        return " | " in command

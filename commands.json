@@ -3,61 +3,98 @@
         {
             "command": "sudo apt update",
             "input": "",
+            "interactive": false,
             "description": ""
         },
         {
             "command": "sudo apt upgrade",
             "input": "Y\n",
+            "interactive": false,
             "description": ""
         },
         {
             "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /home/daniel/Projects/ArduRadio_TestFiles/config.txt",
             "input": "",
+            "interactive": false,
             "description": "uncomment 'dtparam=i2s=on' in '/boot/config.txt'"
         },
         {
             "command": "sudo sed -i s/^\\(dtparam=audio=on\\)/#\\1/ /home/daniel/Projects/ArduRadio_TestFiles/config.txt",
             "input": "",
+            "interactive": false,
             "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
         },
         {
             "command": "sudo sed -i $a\\dtparam=iqaudio-dacplus,unmute_amp /home/daniel/Projects/ArduRadio_TestFiles/config.txt",
             "input": "",
+            "interactive": false,
             "description": "add the line 'dtparam=iqaudio-dacplus,unmute_amp' in '/boot/config.txt'"
         },
         {
             "command": "sudo sed -i s/^\\(dtoverlay=vc4-kms-v3d\\)\\(.*\\)/\\1,noaudio\\2/ /home/daniel/Projects/ArduRadio_TestFiles/config.txt",
             "input": "",
+            "interactive": false,
             "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
         },
         {
             "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
             "input": "",
-	    "description": "connect to the wifi"
+            "interactive": false,
+	        "description": "connect to the wifi"
         },
         {
             "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth",
             "input": "Y\n",
+            "interactive": false,
             "description": "we'll need pulseuadio and it's bluetooth module"
         },
         {
             "command": "sudo usermod -a -G bluetooth daniel",
             "input": "Y\n",
+            "interactive": false,
             "description": ""
         },
         {
-            "command": "sudo rebbot",
-            "input": ""
+            "command": "sudo reboot",
+            "input": "",
+            "interactive": false,
+            "description": ""
         },
         {
             "command": "sudo sed -i \\'$a Class = 0x41C\\' /etc/bluetooth/main.conf",
             "input": "",
+            "interactive": false,
             "description": "bluetooth setup - add Class = 0x41C" 
         },
         {
             "command": "sudo sed -i \\'$a DiscoverableTimeout = 0\\' /etc/bluetooth/main.conf",
             "input": "",
+            "interactive": false,
             "description": "bluetooth setup - add DiscoverableTimeout = 0" 
+        },
+        {
+            "command": "sudo systemctl restart bluetooth",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "bluetoothctl",
+            "input": "\\'power on\\'\\'discoverable on\\'\\'pairable on\\'\\'agent on\\'\\'default-agent\\'\\'quit\\'",
+            "interactive": true,
+            "description": "" 
+        },
+        {
+            "command": "pulseaudio --start",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "sudo systemctl status bluetooth | grep 'Status'",
+            "input": "",
+            "interactive": false,
+            "description": "" 
         }
     ],
     "environment": {
