@@ -43,7 +43,7 @@
 	        "description": "connect to the wifi"
         },
         {
-            "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth",
+            "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim ",
             "input": "Y\n",
             "interactive": false,
             "description": "we'll need pulseuadio and it's bluetooth module"
@@ -95,6 +95,42 @@
             "input": "",
             "interactive": false,
             "description": "" 
+        },
+        {
+            "command": "systemctl --user enable pulseaudio",
+            "input": "",
+            "interactive": false,
+            "description": "starting pulseaudio on boot" 
+        },
+        {
+            "command": "[ -f /etc/systemd/system/bt-agent.service ] && echo \\'bt-agent service file exists\\' || touch /etc/systemd/system/bt-agent.service",
+            "input": "",
+            "interactive": true,
+            "description": "check if file exists. If it doesn't, create it" 
+        },
+        {
+            "command": "sudo cat > /etc/systemd/system/bt-agent.service << \\'[Unit]\nDescription=Bluetooth Auth Agent\nAfter=bluetooth.service\nPartOf=bluetooth.service\n\n[Service]\nType=simple\nExecStart=/usr/bin/bt-agent -c NoInputNoOutput\n\n[Install]\nWantedBy=bluetooth.target\n",
+            "input": "",
+            "interactive": true,
+            "description": "add contains to bt-agent.service" 
+        },
+        {
+            "command": "sudo systemctl enable bt-agent",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "sudo systemctl start bt-agent",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "??",
+            "input": "",
+            "interactive": false,
+            "description": "disable login screen" 
         }
     ],
     "environment": {
