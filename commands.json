@@ -1,6 +1,12 @@
 {
     "commands": [
 	{
+            "command": "",
+            "input": "",
+            "interactive": false,
+            "description": "disable login screen" 
+        },
+	{
             "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
             "input": "",
             "interactive": false,
@@ -119,12 +125,6 @@
             "input": "",
             "interactive": false,
             "description": "" 
-        },
-        {
-            "command": "??",
-            "input": "",
-            "interactive": false,
-            "description": "disable login screen" 
         },
 	{
             "command": "sudo reboot",
