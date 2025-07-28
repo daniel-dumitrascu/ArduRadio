@@ -1,5 +1,11 @@
 {
     "commands": [
+	{
+            "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
+            "input": "",
+            "interactive": false,
+	        "description": "connect to the wifi"
+        },
         {
             "command": "sudo apt update",
             "input": "",
@@ -11,6 +17,12 @@
             "input": "Y\n",
             "interactive": false,
             "description": ""
+        },
+	{
+            "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim ",
+            "input": "Y\n",
+            "interactive": false,
+            "description": "we'll need pulseuadio and it's bluetooth module"
         },
         {
             "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /boot/config.txt",
@@ -37,26 +49,8 @@
             "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
         },
         {
-            "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
-            "input": "",
-            "interactive": false,
-	        "description": "connect to the wifi"
-        },
-        {
-            "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim ",
-            "input": "Y\n",
-            "interactive": false,
-            "description": "we'll need pulseuadio and it's bluetooth module"
-        },
-        {
             "command": "sudo usermod -a -G bluetooth daniel",
             "input": "Y\n",
-            "interactive": false,
-            "description": ""
-        },
-        {
-            "command": "sudo reboot",
-            "input": "",
             "interactive": false,
             "description": ""
         },
@@ -131,6 +125,12 @@
             "input": "",
             "interactive": false,
             "description": "disable login screen" 
+        },
+	{
+            "command": "sudo reboot",
+            "input": "",
+            "interactive": false,
+            "description": ""
         }
     ],
     "environment": {
