@@ -29,6 +29,30 @@
             "input": "Y\n",
             "interactive": false,
             "description": ""
+        },
+	{
+            "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "uncomment 'dtparam=i2s=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i s/^\\(dtparam=audio=on\\)/#\\1/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i $a\\dtoverlay=iqaudio-dacplus,unmute_amp /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "add the line 'dtoverlay=iqaudio-dacplus,unmute_amp' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i s/^\\(dtoverlay=vc4-kms-v3d\\)\\(.*\\)/\\1,noaudio\\2/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
         }
     ],
     "environment": {
