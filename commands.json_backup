@@ -1,0 +1,109 @@
+{
+    "commands": [
+        {
+            "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "uncomment 'dtparam=i2s=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i s/^\\(dtparam=audio=on\\)/#\\1/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i $a\\dtparam=iqaudio-dacplus,unmute_amp /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "add the line 'dtparam=iqaudio-dacplus,unmute_amp' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo sed -i s/^\\(dtoverlay=vc4-kms-v3d\\)\\(.*\\)/\\1,noaudio\\2/ /boot/config.txt",
+            "input": "",
+            "interactive": false,
+            "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
+        },
+        {
+            "command": "sudo usermod -a -G bluetooth daniel",
+            "input": "Y\n",
+            "interactive": false,
+            "description": ""
+        },
+        {
+            "command": "sudo sed -i \\'$a Class = 0x41C\\' /etc/bluetooth/main.conf",
+            "input": "",
+            "interactive": false,
+            "description": "bluetooth setup - add Class = 0x41C" 
+        },
+        {
+            "command": "sudo sed -i \\'$a DiscoverableTimeout = 0\\' /etc/bluetooth/main.conf",
+            "input": "",
+            "interactive": false,
+            "description": "bluetooth setup - add DiscoverableTimeout = 0" 
+        },
+        {
+            "command": "sudo systemctl restart bluetooth",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "bluetoothctl",
+            "input": "\\'power on\\'\\'discoverable on\\'\\'pairable on\\'\\'agent on\\'\\'default-agent\\'\\'quit\\'",
+            "interactive": true,
+            "description": "" 
+        },
+        {
+            "command": "pulseaudio --start",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "sudo systemctl status bluetooth | grep 'Status'",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "systemctl --user enable pulseaudio",
+            "input": "",
+            "interactive": false,
+            "description": "starting pulseaudio on boot" 
+        },
+        {
+            "command": "[ -f /etc/systemd/system/bt-agent.service ] && echo \\'bt-agent service file exists\\' || touch /etc/systemd/system/bt-agent.service",
+            "input": "",
+            "interactive": true,
+            "description": "check if file exists. If it doesn't, create it" 
+        },
+        {
+            "command": "sudo cat > /etc/systemd/system/bt-agent.service << \\'[Unit]\nDescription=Bluetooth Auth Agent\nAfter=bluetooth.service\nPartOf=bluetooth.service\n\n[Service]\nType=simple\nExecStart=/usr/bin/bt-agent -c NoInputNoOutput\n\n[Install]\nWantedBy=bluetooth.target\n",
+            "input": "",
+            "interactive": true,
+            "description": "add contains to bt-agent.service" 
+        },
+        {
+            "command": "sudo systemctl enable bt-agent",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+        {
+            "command": "sudo systemctl start bt-agent",
+            "input": "",
+            "interactive": false,
+            "description": "" 
+        },
+	{
+            "command": "sudo reboot",
+            "input": "",
+            "interactive": false,
+            "description": ""
+        }
+    ],
+    "environment": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin"
+    }
+}
