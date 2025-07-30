@@ -1,9 +1,10 @@
 class Command:
-    def __init__(self, command: str, input: str, interactive: bool, description: str):
+    def __init__(self, command: str, input: str, interactive: bool, timeout: int = 30, description: str = ""):
         self.command = command
         self.fragments = self.split(command)
         self.interactive = interactive
         self.input = input
+        self.timeout = timeout
         self.description = description
 
         if self.interactive:
@@ -39,3 +40,12 @@ class Command:
     
     def shouldSetShell(self, command: str) -> bool:
         return " | " in command
+
+def construct(command: str, input: str, interactive: bool, timeout: int, description: str) -> Command:
+    if timeout is None:
+        timeout = 30
+    
+    if description is None:
+        description = ""
+
+    return Command(command, input, interactive, timeout, description)

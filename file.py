@@ -1,13 +1,13 @@
 import json
 from logging import log
 from pathlib import Path
-from command import Command
+import command
 
 class CFile:
     def __init__(self, log):
         self.log = log
 
-    def readCommands(self) -> list[Command]:
+    def readCommands(self) -> list[command.Command]:
         filename = "commands.json"
         commands = []
 
@@ -40,14 +40,17 @@ class CFile:
                     comm = entry["command"]
                     input = entry["input"]
                     interactive = entry["interactive"]
-                    description = entry["description"]
+                                       
+                    timeout = entry.get("timeout")
+                    description = entry.get("description")
+
                     comm = comm.strip()
                     input = input.strip()
 
                     if not comm:  # Skip empty lines
                         continue
 
-                    commands.append(Command(comm, input, interactive, description))
+                    commands.append(command.construct(comm, input, interactive, timeout, description))
         except FileNotFoundError:
             self.log.error(f"Commands file was not found.")
         except UnicodeDecodeError:

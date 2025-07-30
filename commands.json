@@ -10,24 +10,28 @@
             "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
             "input": "",
             "interactive": false,
+            "timeout": 60,
 	        "description": "connect to the wifi"
         },
 	{
             "command": "sudo apt update",
             "input": "",
             "interactive": false,
+            "timeout": 120,
             "description": ""
         },
         {
             "command": "sudo apt upgrade",
             "input": "Y\n",
             "interactive": false,
+            "timeout": 1800,
             "description": ""
         },
 	{
             "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim",
             "input": "Y\n",
             "interactive": false,
+            "timeout": 480,
             "description": ""
         },
 	{
