@@ -1,19 +1,19 @@
 {
     "commands": [
-	{
+        {
             "command": "sudo raspi-config nonint do_boot_behaviour B2",
             "input": "",
             "interactive": false,
             "description": "disable login screen and GUI" 
         },
-	{
+        {
             "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
             "input": "",
             "interactive": false,
             "timeout": 60,
-	        "description": "connect to the wifi"
+            "description": "connect to the wifi"
         },
-	{
+        {
             "command": "sudo apt update",
             "input": "",
             "interactive": false,
@@ -27,14 +27,20 @@
             "timeout": 1800,
             "description": ""
         },
-	{
+        {
             "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim",
             "input": "Y\n",
             "interactive": false,
             "timeout": 480,
             "description": ""
         },
-	{
+        {
+            "command": "bash ./setup/scripts/determine_boot_config.sh",
+            "input": "",
+            "interactive": false,
+            "description": "running the script that determines the right config file that needs to be modified"
+        },
+        {
             "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /boot/config.txt",
             "input": "",
             "interactive": false,

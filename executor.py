@@ -17,12 +17,16 @@ def executeCommands(log: logging.log, commands: list[Command], opts: Options):
             if len(output) > 0:
                 log.info(output)
         else:
-            log.error(error)
+            err = error
+            if len(output) > 0:
+                err = output + err
+            log.error(err)
+            
             break
 
 def execute(fragments: list[str], input: str, interactive: bool, shell: bool, timeout: int):
     if interactive:
-        return __executeInteractiveCommand__(fragments, input, timeout)
+        return __executeInteractiveCommand__(fragments, input)
     else:
         return __executeNonInteractiveCommand__(fragments, input, timeout, shell)
 
@@ -43,14 +47,13 @@ def __executeNonInteractiveCommand__(cmd: list, input: str, timeout: int, shell:
     except Exception as e:
         return False, "", str(e)
     
-def __executeInteractiveCommand__(cmd: list, inputs: list[str], timeout: int):
+def __executeInteractiveCommand__(cmd: list, inputs: list[str]):
     process = subprocess.Popen(
         args=cmd,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True,
-        timeout=timeout
+        text=True
     )
 
     # Send all inputs
