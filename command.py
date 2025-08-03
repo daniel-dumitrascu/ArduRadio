@@ -39,7 +39,7 @@ class Command:
         return fragments
     
     def shouldSetShell(self, command: str) -> bool:
-        return " | " in command
+        return " | " in command or "$(" in command 
 
 def construct(command: str, input: str, interactive: bool, timeout: int, description: str) -> Command:
     if timeout is None:

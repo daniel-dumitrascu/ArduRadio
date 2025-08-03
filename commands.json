@@ -35,34 +35,24 @@
             "description": ""
         },
         {
-            "command": "bash ./setup/scripts/determine_boot_config.sh",
+            "command": "bash ./setup/scripts/setup_dac.sh",
             "input": "",
             "interactive": false,
-            "description": "running the script that determines the right config file that needs to be modified"
+            "timeout": 120,
+            "description": "script for setting up the DAC that has been connected to the raspberry pi"
         },
         {
-            "command": "sudo sed -i s/^#\\(dtparam=i2s=on\\)/\\1/ /boot/config.txt",
+            "command": "bash ./setup/scripts/setup_bluetooth.sh",
             "input": "",
             "interactive": false,
-            "description": "uncomment 'dtparam=i2s=on' in '/boot/config.txt'"
+            "timeout": 360,
+            "description": "script for setting up the bluetooth on raspberry pi"
         },
-        {
-            "command": "sudo sed -i s/^\\(dtparam=audio=on\\)/#\\1/ /boot/config.txt",
+        	    {
+            "command": "sudo reboot",
             "input": "",
             "interactive": false,
-            "description": "comment the line 'dtparam=audio=on' in '/boot/config.txt'"
-        },
-        {
-            "command": "sudo sed -i $a\\dtoverlay=iqaudio-dacplus,unmute_amp /boot/config.txt",
-            "input": "",
-            "interactive": false,
-            "description": "add the line 'dtoverlay=iqaudio-dacplus,unmute_amp' in '/boot/config.txt'"
-        },
-        {
-            "command": "sudo sed -i s/^\\(dtoverlay=vc4-kms-v3d\\)\\(.*\\)/\\1,noaudio\\2/ /boot/config.txt",
-            "input": "",
-            "interactive": false,
-            "description": "append ',noaudio' to 'dtoverlay=vc4-kms-v3d' in '/boot/config.txt'"
+            "description": ""
         }
     ],
     "environment": {
