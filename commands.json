@@ -48,7 +48,7 @@
             "timeout": 360,
             "description": "script for setting up the bluetooth on raspberry pi"
         },
-        	    {
+        {
             "command": "sudo reboot",
             "input": "",
             "interactive": false,
