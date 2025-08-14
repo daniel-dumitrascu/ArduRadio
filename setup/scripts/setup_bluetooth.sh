@@ -49,6 +49,8 @@ sleep 10
 echo " --> Start pulseaudio"
 pulseaudio --start
 
+sleep 5
+
 echo " --> Check the status of the bluetooth module"
 BLUETOOTH_STATUS=$(systemctl status bluetooth | grep 'Active:' | awk '{print $2, $3}' | tr -d '()')
 if [[ "$BLUETOOTH_STATUS" == "active running" ]]; then

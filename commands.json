@@ -14,13 +14,6 @@
             "description": "connect to the wifi"
         },
         {
-            "command": "sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim",
-            "input": "Y\n",
-            "interactive": false,
-            "timeout": 480,
-            "description": ""
-        },
-        {
             "command": "bash ./setup/scripts/setup_dac.sh",
             "input": "",
             "interactive": false,
@@ -35,7 +28,7 @@
             "description": "script for setting up the bluetooth on raspberry pi"
         },
         {
-            "command": "sudo reboot",
+            "command": "echo \\'The setup has ended. You can now restart the Raspberry Pi\\'",
             "input": "",
             "interactive": false,
             "description": ""
