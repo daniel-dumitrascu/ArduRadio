@@ -29,27 +29,25 @@ sudo sed -i '$a DiscoverableTimeout = 0' "$BLUETOOTH_CONFIG"
 echo " --> Restart bluetooth module"
 sudo systemctl restart bluetooth
 
-echo " --> Execute bluetooth commands"
-{
-  echo "power on"
-  sleep 1
-  echo "discoverable on"
-  sleep 1
-  echo "pairable on"
-  sleep 1
-  echo "agent on"
-  sleep 1
-  echo "default-agent"
-  sleep 1
-  echo "quit"
-} | bluetoothctl &
+# Wait for bluetooth service to fully restart
+sleep 3
 
-sleep 10
+echo " --> Execute bluetooth commands"
+bluetoothctl power on
+sleep 2
+bluetoothctl discoverable on
+sleep 2  
+bluetoothctl pairable on
+sleep 2
+bluetoothctl agent on
+sleep 2
+bluetoothctl default-agent
+sleep 2
 
 echo " --> Start pulseaudio"
 pulseaudio --start
 
-sleep 5
+sleep 3
 
 echo " --> Check the status of the bluetooth module"
 BLUETOOTH_STATUS=$(systemctl status bluetooth | grep 'Active:' | awk '{print $2, $3}' | tr -d '()')

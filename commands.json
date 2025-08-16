@@ -7,13 +7,6 @@
             "description": "disable login screen and GUI" 
         },
         {
-            "command": "sudo nmcli dev wifi connect SSID password PASSWORD",
-            "input": "",
-            "interactive": false,
-            "timeout": 60,
-            "description": "connect to the wifi"
-        },
-        {
             "command": "bash ./setup/scripts/setup_dac.sh",
             "input": "",
             "interactive": false,
