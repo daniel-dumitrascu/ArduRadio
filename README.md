@@ -13,6 +13,27 @@
   </p>
 </div>
 
+<h2>Prerequisites</h2>
+
+Connect to the internet using the GUI or by command line:
+
+```bash
+sudo nmcli dev wifi connect <SSID> password <PASSWORD>
+```
+
+Update the system:
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+Install all the necessary tools:
+
+```bash
+sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim
+```
+
 ## Author
 
 👤 **Daniel Dumitrascu**
