@@ -34,6 +34,20 @@ Install all the necessary tools:
 sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim
 ```
 
+<h2>Running the script</h2>
+
+The script can be run to setup the Raspberry Pi (DAC, bluetooth, AI):
+
+```bash
+python3 radio.py setup
+```
+
+Or to start the AI / bluetooth logic:
+
+```bash
+python3 radio.py start
+```
+
 ## Author
 
 👤 **Daniel Dumitrascu**
