@@ -8,7 +8,8 @@ class Server:
     self.port = 8008
 
   def start(self):
-    self.log.info("Starting the server")
+    self.log.info(f"Starting the server at port {self.port}")
+    
     server_address = ('', self.port)
     httpd = HTTPServer(server_address, handler.Handler)
     self.log.info("Server has started successfully")
