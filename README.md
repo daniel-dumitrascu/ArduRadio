@@ -31,7 +31,7 @@ sudo apt upgrade
 Install all the necessary tools:
 
 ```bash
-sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim
+sudo apt install pulseaudio pulseaudio-module-bluetooth bluez-tools vim redis
 ```
 
 <h2>Running the script</h2>
