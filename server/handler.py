@@ -1,15 +1,15 @@
 from http.server import BaseHTTPRequestHandler
+from executor.worker import Worker
 
 class Handler(BaseHTTPRequestHandler):
     
     def __init__(self, *args, **kwargs):
         self.routes = {
-                '/user': self.user,
-                '/status': self.status,
+                '/streaming': self.streaming
             }
         super().__init__(*args, **kwargs)
 
-    def do_GET(self):
+    def do_POST(self):
         # Check for exact match
         if self.path in self.routes:
             self.routes[self.path]()
@@ -24,17 +24,15 @@ class Handler(BaseHTTPRequestHandler):
         # 404 Not Found
         self.send_404()
 
-    def user(self):
+    def streaming(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        self.wfile.write(b'{"user": "Daniel"}')
-    
-    def status(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(b'{"status": "Fine"}')
+
+        w = Worker()
+        w.start()
+
+        self.wfile.write(b'{"streaming": "Options are ON or OFF"}')
 
     def send_404(self):
         self.send_response(404)
