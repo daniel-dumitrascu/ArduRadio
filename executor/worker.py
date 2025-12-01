@@ -10,7 +10,7 @@ class Worker(Process):
     def work(self):
         print("MyProcess: running...")
         
-        time.sleep(2.0)
+        time.sleep(5.0)
         
         print("MyProcess: ended")
 
