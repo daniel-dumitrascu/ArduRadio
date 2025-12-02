@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler
+from http import HTTPStatus
 from executor.management import WorkerManager
 from dto.request_command import json_to_DTO
 import dto
@@ -44,13 +45,20 @@ class Handler(BaseHTTPRequestHandler):
 
         self.worker_manager.start(dto)
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(b'{"streaming": "Options are ON or OFF"}')
+        header = {
+            'Content-Type': 'application/json'
+        }
+        self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', header)
 
     def send_404(self):
-        self.send_response(404)
-        self.send_header('Content-type', 'text/html')
+        header = {
+            'Content-Type': 'text/html'
+        }
+        self.construct_response(HTTPStatus.NOT_FOUND, b'<h1>404 Not Found</h1>', header)
+
+    def construct_response(self, status_code, body, headers={}):
+        self.send_response(status_code)
+        for key, value in headers.items():
+            self.send_header(key, value)
         self.end_headers()
-        self.wfile.write(b'<h1>404 Not Found</h1>')
+        self.wfile.write(body)
