@@ -50,6 +50,9 @@ class Handler(BaseHTTPRequestHandler):
         }
         self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', header)
 
+    def command(self):
+        pass
+
     def send_404(self):
         header = {
             'Content-Type': 'text/html'
