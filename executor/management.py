@@ -2,7 +2,7 @@ import redis
 import psutil
 import logging
 import logger
-from dto.request_command import CommandRequest
+from dto.command import CommandRequest
 from executor.worker import Worker
 
 database = redis.Redis(host="localhost", port=6379, db=0)

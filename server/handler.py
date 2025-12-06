@@ -1,10 +1,14 @@
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from executor.management import WorkerManager
-from dto.request_command import json_to_DTO
-import dto
+from dto.request import Request
+from utils.transform import obj_to_json
+import redis
 import logging
 import logger
+import time
+
+database = redis.Redis(host="localhost", port=6379, db=0)
 
 class Handler(BaseHTTPRequestHandler):
     
@@ -32,24 +36,35 @@ class Handler(BaseHTTPRequestHandler):
         self.send_404()
 
     def streaming(self):
-        if self.worker_manager.running() == True:
-            self.worker_manager.stop() 
-
+        # Get request as json
         content_length = int(self.headers.get('Content-Length', 0))
         raw_body = self.rfile.read(content_length)
-        
-        dto, err_mess = json_to_DTO(raw_body)
-        if dto == None:
-            self.log(err_mess)
+        json_data = obj_to_json(raw_body)
+
+        if json_data is None:
+            self.log.error("Invalid JSON received")
+            self.construct_response(HTTPStatus.BAD_REQUEST, b'{"error":"Invalid JSON"}', {'Content-Type': 'application/json'})
             return
 
-        self.worker_manager.start(dto)
+        # Write it to Redis as pending command
+        database.set("RADIO_PENDING_COMAND", obj_to_json(Request(json_data, time.time())))
 
-        header = {
-            'Content-Type': 'application/json'
-        }
-        self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', header)
+        # Response
+        self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', {'Content-Type': 'application/json'})
 
+        # if self.worker_manager.running() == True:
+        #     self.worker_manager.stop() 
+
+        # content_length = int(self.headers.get('Content-Length', 0))
+        # raw_body = self.rfile.read(content_length)
+        # dto, err_mess = bytes_to_DTO(raw_body)
+
+        # if dto == None:
+        #     self.log(err_mess)
+        #     return
+
+        # self.worker_manager.start(dto)
+        
     def command(self):
         pass
 
