@@ -1,7 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from executor.management import WorkerManager
-from dto.request import Request
 from utils.transform import obj_to_json
 import redis
 import logging
@@ -47,7 +46,11 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         # Write it to Redis as pending command
-        database.set("RADIO_PENDING_COMAND", obj_to_json(Request(json_data, time.time())))
+        database.hset("RADIO_PENDING_COMMAND", mapping={
+            "req_id": "abc123",
+            "req_time": str(time.time()),
+            "req_body": json_data
+        })
 
         # Response
         self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', {'Content-Type': 'application/json'})
