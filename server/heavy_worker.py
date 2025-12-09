@@ -25,6 +25,7 @@ class HeavyWorker(Process):
                 now = time.time()
 
                 if now - req_time >= 2.0:
+                    self.log.info(f"Processing request {reqid}")
                     # Process the request...
                     self.delete_pending_command(keys=["RADIO_PENDING_COMMAND"], args=[reqid])
 
@@ -36,7 +37,7 @@ class HeavyWorker(Process):
         local expected_id = ARGV[1]
 
         -- read the ID field from the hash
-        local stored_id = redis.call("HGET", key, "id")
+        local stored_id = redis.call("HGET", key, "req_id")
 
         -- if no match, do nothing
         if stored_id ~= expected_id then

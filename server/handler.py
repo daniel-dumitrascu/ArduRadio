@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from executor.management import WorkerManager
 from utils.transform import obj_to_json
+import uuid
 import redis
 import logging
 import logger
@@ -44,16 +45,20 @@ class Handler(BaseHTTPRequestHandler):
             self.log.error("Invalid JSON received")
             self.construct_response(HTTPStatus.BAD_REQUEST, b'{"error":"Invalid JSON"}', {'Content-Type': 'application/json'})
             return
+        
+        req_id = uuid.uuid4().hex
+        req_time = str(time.time())
 
         # Write it to Redis as pending command
         database.hset("RADIO_PENDING_COMMAND", mapping={
-            "req_id": "abc123",
-            "req_time": str(time.time()),
+            "req_id": req_id,
+            "req_time": req_time,
             "req_body": json_data
         })
 
         # Response
-        self.construct_response(HTTPStatus.OK, b'{"streaming": "Options are ON or OFF"}', {'Content-Type': 'application/json'})
+        formated_res = '{{"req_id": "{}", "req_time": "{}", "req_body": "{}"}}'.format(req_id, req_time, json_data)
+        self.construct_response(HTTPStatus.OK, formated_res.encode(), {'Content-Type': 'application/json'})
 
         # if self.worker_manager.running() == True:
         #     self.worker_manager.stop() 
