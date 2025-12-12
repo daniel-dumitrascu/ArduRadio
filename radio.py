@@ -3,6 +3,7 @@ import sys
 import logging
 import logger
 import executor
+from server.server import Server
 from file import CFile
 from command import Command
 from options import Options
@@ -11,6 +12,8 @@ from setup_options import SetupOptions
 def start():
     log = logger.getLogger("start", logging.INFO)
     log.info("Starting the radio...")
+    serv = Server(log)
+    serv.start()
 
 def setup(options : Options):
     log = logger.getLogger("setup", logging.INFO)
@@ -33,8 +36,7 @@ if len(args) < 2:
 
 match args[1]:
     case "start":
-        #options = StartOptions(args)
-        #start(options)
+        start()
         pass
 
     case "setup":

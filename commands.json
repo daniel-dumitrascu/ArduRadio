@@ -1,6 +1,18 @@
 {
     "commands": [
         {
+            "command": "sudo systemctl enable redis-server",
+            "input": "",
+            "interactive": false,
+            "description": "enable Redis" 
+        },
+        {
+            "command": "sudo systemctl start redis-server",
+            "input": "",
+            "interactive": false,
+            "description": "start Redis" 
+        },
+        {
             "command": "sudo raspi-config nonint do_boot_behaviour B2",
             "input": "",
             "interactive": false,
