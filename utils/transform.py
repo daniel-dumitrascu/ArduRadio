@@ -19,7 +19,7 @@ def obj_to_json(obj):
 def json_to_obj(json_str, cls):
     try:
         data = json.loads(json_str.decode('utf-8'))
-        return cls(**data)
+        return cls(**data), None
     except json.JSONDecodeError:
         return None, b'{"error":"Invalid JSON"}'
     except TypeError as e:

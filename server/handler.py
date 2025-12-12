@@ -1,6 +1,5 @@
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
-from executor.management import WorkerManager
 from utils.transform import obj_to_json
 import uuid
 import redis
@@ -14,9 +13,8 @@ class Handler(BaseHTTPRequestHandler):
     
     def __init__(self, *args, **kwargs):
         self.log = logger.getLogger("handler", logging.INFO)
-        self.worker_manager = WorkerManager()
         self.routes = {
-                '/streaming': self.streaming
+                '/command': self.command
             }
         super().__init__(*args, **kwargs)
 
@@ -35,11 +33,10 @@ class Handler(BaseHTTPRequestHandler):
         # 404 Not Found
         self.send_404()
 
-    def streaming(self):
+    def command(self):
         # Get request as json
         content_length = int(self.headers.get('Content-Length', 0))
-        raw_body = self.rfile.read(content_length)
-        json_data = obj_to_json(raw_body)
+        json_data = self.rfile.read(content_length)
 
         if json_data is None:
             self.log.error("Invalid JSON received")
@@ -59,22 +56,6 @@ class Handler(BaseHTTPRequestHandler):
         # Response
         formated_res = '{{"req_id": "{}", "req_time": "{}", "req_body": "{}"}}'.format(req_id, req_time, json_data)
         self.construct_response(HTTPStatus.OK, formated_res.encode(), {'Content-Type': 'application/json'})
-
-        # if self.worker_manager.running() == True:
-        #     self.worker_manager.stop() 
-
-        # content_length = int(self.headers.get('Content-Length', 0))
-        # raw_body = self.rfile.read(content_length)
-        # dto, err_mess = bytes_to_DTO(raw_body)
-
-        # if dto == None:
-        #     self.log(err_mess)
-        #     return
-
-        # self.worker_manager.start(dto)
-        
-    def command(self):
-        pass
 
     def send_404(self):
         header = {

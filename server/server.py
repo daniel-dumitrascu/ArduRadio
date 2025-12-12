@@ -1,7 +1,7 @@
 from server import handler
 from http.server import HTTPServer
 from logging import log
-from server.heavy_worker import HeavyWorker
+from server.dispatcher import Dispatcher
 
 class Server:
   def __init__(self, log):
@@ -12,7 +12,7 @@ class Server:
     self.log.info(f"Starting the server at port {self.port}")
 
     # Create the backend heavy worker and start it
-    worker = HeavyWorker()
+    worker = Dispatcher()
     worker.start()
 
     # Start listening for requests on the main process
